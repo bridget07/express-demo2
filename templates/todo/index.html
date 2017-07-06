@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <link rel="stylesheet" href="/static/css/pure-min.css">
+    <style>
+        .todo-table {
+            margin: 0 auto;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <h1>todo</h1>
+        <form action="/todo/update" method="post">
+            <input type="text" placeholder="add todo" name="title"">
+            <input class="pure-button pure-button-primary" type="submit" value="add">
+        </form>
+    </div>
+    <table class="todo-table pure-table pure-table-horizontal pure-table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>created time</th>
+                <th>updated time</th>
+                <th>status</th>
+                <th>action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in todos %}
+            {% if t.completed %}
+                {% set rowClass = "completed" %}
+            {% else %}
+                {% set rowClass = "" %}
+            {% endif %}
+            <tr class="{{ rowClass }}">
+                <td>{{ t.id }}</td>
+                <td>{{ t.title }}</td>
+                <td>{{ t.ct }}</td>
+                <td>{{ t.ut }}</td>
+                <td>{{ t.completed }}</td>
+                <td>
+                    <a href="/todo/edit/{{ t.id }}">edit</a>
+                    <a href="/todo/delete/{{ t.id }}">delete</a>
+                    <a href="/todo/complete/{{ t.id }}">complete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
